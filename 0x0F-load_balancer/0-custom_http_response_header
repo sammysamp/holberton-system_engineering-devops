@@ -5,6 +5,7 @@ sudo apt-get update
 sudo apt install nginx -y
 sudo chown -R ubuntu /var/www/html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
+echo "Hello World" > /var/www/html/index.html
 replace="\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n"
 replace2="\n\\terror_page 404 /404.html;\n\tlocation = /var/www/html/404.html {\n\t\tinternal;\n\t}"
 replace3="\n\tadd_header X-Served-By \$hostname;"
