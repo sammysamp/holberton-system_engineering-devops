@@ -1,32 +1,10 @@
 #!/usr/bin/env bash
-# Redirect
-TMP_FILE="tmp_version"
-SU=$(whoami)
-DIR="/ect/nginx/sites-available/default"
-NEW_URL="https://twitter.com/Luffy_981"
-OLD_URL="/redirect_me"
-REDIRECT="\tlocation ${OLD_URL} {\n\t\treturn 301 ${NEW_URL};\n\t}"
+# Install nginx web server
 
-if [[ "$SU" == "root" ]];
-then
-	SU="sudo"
-else
-	echo "You need run with sudo"
-	exit
-fi
-
-$SU apt-get -y update
-$SU apt-get -y install nginx
-
-nginx -v 2>"STMP_FILE" 1> /dev/null
-
-$SU echo "Holberton School" > ~/index.html
-$SU mkdir --parents /var/www/html/
-$SU cp ~/index.html /var/www/html/
-
-if [[ "$(wc --lines -- $TMP_FILE | cut --fields=1 --delimiter=' ')" -eq 1 ]];
-then
-	$SU sed -i "/server_name _;/ a\\${REDIRECT}" $DIR
-	$SU service nginx restart
-fi
-$SU rm "$TMP_FILE"
+sudo apt-get update
+sudo apt install nginx -y
+sudo chown -R ubuntu /var/www
+echo "Hello World" > /var/www/html/index.nginx-debian.html
+replace="\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n"
+sudo sed -i "53i\ $replace" /etc/nginx/sites-available/default
+sudo service nginx restart
