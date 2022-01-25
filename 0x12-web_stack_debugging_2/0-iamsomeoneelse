@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# script that recognize an user
+sudo -u "$1" whoami
