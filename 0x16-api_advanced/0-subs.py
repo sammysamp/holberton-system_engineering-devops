@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 """reddit api"""
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
+    """  Args:
+        subreddit: subreddit name
+    Returns:
+        number of subscribers to the subreddit,
+        or 0 if subreddit requested is invalid"""
+    headers = {'User-Agent': 'xica369'}
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {'user-agent': 'MyAPI/0.0.1'}
-    response = requests.get(url)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
-        r = requests.get(url, headers=headers)
-        json = r.json()
-        if json:
-            data = json.get("data")
-            if data:
-                subscribers = data.get("subscribers")
-                return subscribers
-            return 0
-        return 0
-    return 0
+        return (response.json().get("data").get("subscribers"))
+    return (0)
